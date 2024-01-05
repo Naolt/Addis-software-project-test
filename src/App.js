@@ -6,10 +6,13 @@ import SongList from "./components/SongList";
 import SongHeader from "./components/SongHeader";
 import { colors } from "./theme";
 import AddSong from "./components/AddSong";
+import { useDispatch, useSelector } from "react-redux";
+import { EditSong } from "./components/EditSong";
 
 // Import other components as needed
 
 function App() {
+  const editModalOpen = useSelector((state) => state.editModal.open);
   const [addModalOpen, setAddModalOpen] = useState(false);
 
   return (
@@ -21,8 +24,8 @@ function App() {
         color: colors.textColor,
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center",
         alignItems: "center",
+        paddingTop: "10%",
         gap: "20px",
       }}
     >
@@ -33,7 +36,7 @@ function App() {
           color: colors.textColor,
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center",
+          justifyContent: "flex-start",
           alignItems: "center",
           gap: "20px",
         }}
@@ -42,6 +45,7 @@ function App() {
         <SongHeader openModal={() => setAddModalOpen(true)} />
         <SongList />
         {addModalOpen && <AddSong closeModal={() => setAddModalOpen(false)} />}
+        {editModalOpen && <EditSong />}
       </div>
       {/* Render other components here */}
     </div>

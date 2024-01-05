@@ -36,7 +36,7 @@ const SongHeader = ({ openModal }) => {
           border: "none",
         }}
         type="text"
-        placeholder="Enter song title"
+        placeholder="Search"
         value={newSongTitle}
         onChange={(e) => setNewSongTitle(e.target.value)}
       />

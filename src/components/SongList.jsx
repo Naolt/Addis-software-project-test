@@ -4,14 +4,14 @@ import { jsx, css } from "@emotion/react";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSongs } from "../store/reducers/songsReducer";
-import SongCard from "./SongCard";
+import SongCard, { SongCardSkeleton } from "./SongCard";
 import { colors } from "../theme";
 
 const SongList = () => {
   const dispatch = useDispatch();
-  const songs = useSelector((state) => state.songs);
-  console.log(songs);
-
+  const songs = useSelector((state) => state.songs.data);
+  const loading = useSelector((state) => state.songs.loading);
+  console.log(songs, loading);
   useEffect(() => {
     console.log("dispatched");
     dispatch(fetchSongs());
@@ -28,9 +28,9 @@ const SongList = () => {
           gap: "8px",
         }}
       >
-        {songs?.map((song) => (
-          <SongCard title={song.title} />
-        ))}
+        {loading
+          ? [1, 2, 3, 4].map((_) => <SongCardSkeleton />)
+          : songs?.map((song) => <SongCard title={song.title} id={song.id} />)}
       </ul>
     </div>
   );
