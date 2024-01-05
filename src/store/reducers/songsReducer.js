@@ -4,17 +4,36 @@ const songsSlice = createSlice({
   name: "songs",
   initialState: [],
   reducers: {
+    addSong: (state, action) => state,
     setSongs: (state, action) => action.payload,
-    addSong: (state, action) => [...state, action.payload],
+
     updateSong: (state, action) => {
-      // Implement logic to update a song in the state
+      // To be implemented
+      //const newState = state.map((song) => {
+      //  if (song.id === action.payload.id) {
+      //    return action.payload;
+      //  }
+      //  return song;
+      //});
+      //return newState;
     },
     deleteSong: (state, action) => {
-      // Implement logic to delete a song from the state
+      // To be implemented
+      //const newState = state.filter((song) => song.id !== action.payload);
+      //return newState;
     },
+    addSongtoState: (state, action) => [...state, action.payload],
+    fetchSongs: (state, action) => action.payload,
   },
 });
 
-export const { setSongs, addSong, updateSong, deleteSong } = songsSlice.actions;
+export const {
+  setSongs,
+  addSong,
+  updateSong,
+  deleteSong,
+  fetchSongs,
+  addSongtoState,
+} = songsSlice.actions;
 
 export default songsSlice.reducer;

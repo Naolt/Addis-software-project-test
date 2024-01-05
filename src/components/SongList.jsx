@@ -1,21 +1,35 @@
+/** @jsxRuntime classic */
+/** @jsx jsx */
+import { jsx, css } from "@emotion/react";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSongs } from "../store/reducers/songsReducer";
+import SongCard from "./SongCard";
+import { colors } from "../theme";
 
 const SongList = () => {
   const dispatch = useDispatch();
   const songs = useSelector((state) => state.songs);
+  console.log(songs);
 
   useEffect(() => {
+    console.log("dispatched");
     dispatch(fetchSongs());
   }, [dispatch]);
 
   return (
     <div>
-      <h2>Song List</h2>
-      <ul>
-        {songs.map((song) => (
-          <li key={song.id}>{song.title}</li>
+      <ul
+        css={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "8px",
+        }}
+      >
+        {songs?.map((song) => (
+          <SongCard title={song.title} />
         ))}
       </ul>
     </div>
