@@ -1,6 +1,16 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import { setSongs, addSong, addSongtoState } from "../reducers/songsReducer";
-import { addSongApi, getSongsApi } from "../../api/songsApi";
+import {
+  setSongs,
+  addSongSuccess,
+  deleteSongSuccess,
+  updateSongSuccess,
+} from "../reducers/songsReducer";
+import {
+  addSongApi,
+  deleteSongApi,
+  getSongsApi,
+  updateSongApi,
+} from "../../api/songsApi";
 
 function* fetchSongsSaga() {
   console.log("Fetching songs");
@@ -17,23 +27,42 @@ function* addSongSaga(action) {
 
   try {
     const song = yield call(addSongApi, action.payload);
-    yield put(addSongtoState(song));
+    yield put(addSongSuccess(song));
   } catch (error) {
     console.log(error);
   }
 }
 
-//function* watchFetchSongs() {
-//  yield takeLatest("songs/fetchSongs", fetchSongsSaga);
-//}
+function* updateSongSaga(action) {
+  console.log("Updating song");
+
+  try {
+    const song = yield call(updateSongApi, action.payload);
+    yield put(updateSongSuccess(song));
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function* deleteSongSaga(action) {
+  console.log("Deleting song");
+
+  try {
+    const song = yield call(deleteSongApi, action.payload.id);
+    yield put(deleteSongSuccess({ id: song.id }));
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 function* watchAddSong() {
-  console.log("addSong watther");
+  console.log("addSong watchers");
   yield takeLatest("songs/addSong", addSongSaga);
   yield takeLatest("songs/fetchSongs", fetchSongsSaga);
+  yield takeLatest("songs/deleteSong", deleteSongSaga);
+  yield takeLatest("songs/updateSong", updateSongSaga);
 }
 
 export default function* songsSaga() {
   yield watchAddSong();
-  //yield watchFetchSongs();
-  // Add other watcher sagas here if needed
 }

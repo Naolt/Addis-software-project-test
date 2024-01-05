@@ -2,38 +2,67 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const songsSlice = createSlice({
   name: "songs",
-  initialState: [],
+  initialState: {
+    data: [],
+    loading: false,
+    error: null,
+  },
   reducers: {
-    addSong: (state, action) => state,
-    setSongs: (state, action) => action.payload,
-
+    // Actions
+    addSong: (state, action) => {
+      return { ...state, loading: true };
+    },
     updateSong: (state, action) => {
-      // To be implemented
-      //const newState = state.map((song) => {
-      //  if (song.id === action.payload.id) {
-      //    return action.payload;
-      //  }
-      //  return song;
-      //});
-      //return newState;
+      return { ...state, loading: true };
     },
     deleteSong: (state, action) => {
-      // To be implemented
-      //const newState = state.filter((song) => song.id !== action.payload);
-      //return newState;
+      return { ...state, loading: true };
     },
-    addSongtoState: (state, action) => [...state, action.payload],
-    fetchSongs: (state, action) => action.payload,
+    fetchSongs: (state, action) => {
+      return { ...state, loading: true };
+    },
+
+    // Reducers
+    setSongs: (state, action) => {
+      console.log(action.payload);
+      return { ...state, data: [...action.payload], loading: false };
+    },
+    addSongSuccess: (state, action) => ({
+      ...state,
+      data: [...state.data, action.payload],
+      loading: false,
+    }),
+    updateSongSuccess: (state, action) => {
+      return {
+        ...state,
+        data: state.data.map((song) => {
+          if (song.id === action.payload.id) {
+            return action.payload;
+          }
+          return song;
+        }),
+        loading: false,
+      };
+    },
+    deleteSongSuccess: (state, action) => {
+      return {
+        ...state,
+        data: state.data.filter((song) => song.id !== action.payload.id),
+        loading: false,
+      };
+    },
   },
 });
 
 export const {
-  setSongs,
   addSong,
   updateSong,
   deleteSong,
+  setSongs,
   fetchSongs,
-  addSongtoState,
+  addSongSuccess,
+  updateSongSuccess,
+  deleteSongSuccess,
 } = songsSlice.actions;
 
 export default songsSlice.reducer;

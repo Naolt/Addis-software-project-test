@@ -1,4 +1,11 @@
-import { collection, getDocs, addDoc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  deleteDoc,
+  setDoc,
+  doc,
+} from "firebase/firestore";
 import { db } from "./firebase";
 // Get a list of songs from the database
 export async function getSongsApi() {
@@ -27,5 +34,31 @@ export async function addSongApi(song) {
     return addedSong;
   } catch (error) {
     console.log("Error adding song", error);
+  }
+}
+
+// Update a song on the database
+export async function updateSongApi(song) {
+  const newSong = { ...song };
+  delete newSong.id;
+  try {
+    const docRef = doc(db, "songs", song.id);
+    const updatedRef = await setDoc(docRef, newSong);
+    console.log("The document has been updated successfully.");
+    return { ...song };
+  } catch (error) {
+    console.log("Error deleting song", error);
+  }
+}
+
+// Delete a song from the database
+export async function deleteSongApi(songId) {
+  try {
+    const docRef = doc(db, "songs", songId);
+    await deleteDoc(docRef);
+    console.log("Entire Document has been deleted successfully.");
+    return { id: songId };
+  } catch (error) {
+    console.log("Error deleting song", error);
   }
 }
