@@ -61,20 +61,7 @@ const AddSong = ({ closeModal }) => {
           value={newSongTitle}
           onChange={(e) => setNewSongTitle(e.target.value)}
         />
-        <input
-          css={{
-            padding: "10px 10px",
-            width: "100%",
 
-            borderRadius: "8px",
-            outlineColor: colors.primaryColor,
-            border: "none",
-          }}
-          type="text"
-          placeholder="Artist name"
-          value={newSongTitle}
-          onChange={(e) => setNewSongTitle(e.target.value)}
-        />
         <div
           css={{
             display: "flex",

@@ -5,13 +5,21 @@ import {
   deleteDoc,
   setDoc,
   doc,
+  query,
+  where,
 } from "firebase/firestore";
 import { db } from "./firebase";
 // Get a list of songs from the database
-export async function getSongsApi() {
+export async function getSongsApi(searchTerm) {
   try {
-    const songsCollection = collection(db, "songs");
-    const songsSnapshot = await getDocs(songsCollection);
+    console.log("in saga", searchTerm);
+    const songsRef = collection(db, "songs");
+    const q = query(
+      songsRef,
+      where("title", ">=", searchTerm),
+      where("title", "<=", searchTerm + "\uf8ff")
+    );
+    const songsSnapshot = await getDocs(q);
     const songsList = songsSnapshot.docs.map((doc) => ({
       ...doc.data(),
       id: doc.id,

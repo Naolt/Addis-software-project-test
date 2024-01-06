@@ -1,24 +1,10 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addSong } from "../store/reducers/songsReducer";
 import { colors } from "../theme";
-import AddSong from "./AddSong";
 import { Button } from "./Button";
 
-const SongHeader = ({ openModal }) => {
-  const dispatch = useDispatch();
-  const [newSongTitle, setNewSongTitle] = useState("");
-
-  const handleAddSong = () => {
-    console.log("dispatched");
-
-    dispatch(addSong({ title: newSongTitle }));
-    setNewSongTitle("");
-  };
-
+const SongHeader = ({ openModal, searchTerm, setSearchTerm }) => {
   return (
     <div
       css={{
@@ -37,8 +23,8 @@ const SongHeader = ({ openModal }) => {
         }}
         type="text"
         placeholder="Search"
-        value={newSongTitle}
-        onChange={(e) => setNewSongTitle(e.target.value)}
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
       />
       <Button color="primary" onClick={() => openModal()}>
         Add Song
