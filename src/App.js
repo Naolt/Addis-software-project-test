@@ -13,7 +13,7 @@ import { fetchSongs } from "./store/reducers/songsReducer";
 function App() {
   const editModalOpen = useSelector((state) => state.editModal.open);
   const [addModalOpen, setAddModalOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("b");
+  const [searchTerm, setSearchTerm] = useState("");
 
   const dispatch = useDispatch();
   const songs = useSelector((state) => state.songs.data);
