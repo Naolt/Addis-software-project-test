@@ -12,10 +12,10 @@ import {
   updateSongApi,
 } from "../../api/songsApi";
 
-function* fetchSongsSaga() {
-  console.log("Fetching songs");
+function* fetchSongsSaga(action) {
+  console.log("Fetching songs", action);
   try {
-    const songs = yield call(getSongsApi);
+    const songs = yield call(getSongsApi, action.payload);
     yield put(setSongs(songs));
   } catch (error) {
     throw error;
