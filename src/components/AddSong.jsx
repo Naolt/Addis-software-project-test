@@ -44,7 +44,8 @@ const AddSong = ({ closeModal }) => {
         left: 0,
         width: "100%",
         height: "100%",
-        background: "rgba(0, 0, 0, 0.9)", // Darkened background
+        background: "rgba(255, 255, 255, 0.4)", // Darkened background
+        // Darkened background
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -57,7 +58,7 @@ const AddSong = ({ closeModal }) => {
           display: "flex",
           flexDirection: "column",
           gap: "20px",
-          width: "",
+          width: "400px",
           borderRadius: "8px",
           padding: "20px",
           justifyContent: "center",
@@ -65,56 +66,131 @@ const AddSong = ({ closeModal }) => {
         }}
       >
         <h2>New Song</h2>
-        <input
+        <div
           css={{
-            padding: "10px 10px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "8px",
             width: "100%",
-            borderRadius: "8px",
-            outlineColor: colors.primaryColor,
-            border: "none",
           }}
-          type="text"
-          placeholder="Song title"
-          value={songDetail.title}
-          onChange={handleTitleChange}
-        />
-        <input
+        >
+          <label
+            htmlFor="title"
+            css={{
+              color: colors.textColor,
+              fontSize: "14px",
+            }}
+          >
+            Title
+          </label>
+          <input
+            css={{
+              padding: "10px 10px",
+              width: "100%",
+              borderRadius: "8px",
+              outlineColor: colors.primaryColor,
+              border: "none",
+            }}
+            name="title"
+            type="text"
+            placeholder="Song title"
+            value={songDetail.title}
+            onChange={handleTitleChange}
+          />
+        </div>
+        <div
           css={{
-            padding: "10px 10px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "8px",
             width: "100%",
-            borderRadius: "8px",
-            outlineColor: colors.primaryColor,
-            border: "none",
           }}
-          type="text"
-          placeholder="Song Artist"
-          value={songDetail.artist}
-          onChange={handleArtistChange}
-        />
-        <input
+        >
+          <label
+            htmlFor="artist"
+            css={{
+              color: colors.textColor,
+              fontSize: "14px",
+            }}
+          >
+            Artist
+          </label>
+          <input
+            css={{
+              padding: "10px 10px",
+              width: "100%",
+              borderRadius: "8px",
+              outlineColor: colors.primaryColor,
+              border: "none",
+            }}
+            name="artist"
+            type="text"
+            placeholder="Song Artist"
+            value={songDetail.artist}
+            onChange={handleArtistChange}
+          />
+        </div>
+        <div
           css={{
-            padding: "10px 10px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "8px",
             width: "100%",
-            borderRadius: "8px",
-            outlineColor: colors.primaryColor,
-            border: "none",
           }}
-          type="file"
-          placeholder="Upload the song..."
-          onChange={handleFileChange}
-        />
-        <input
+        >
+          <label
+            htmlFor="title"
+            css={{
+              color: colors.textColor,
+              fontSize: "14px",
+            }}
+          >
+            Song
+          </label>
+
+          <input
+            css={{
+              padding: "10px 10px",
+              width: "100%",
+              borderRadius: "8px",
+              outlineColor: colors.primaryColor,
+              border: "none",
+            }}
+            type="file"
+            placeholder="Upload the song..."
+            onChange={handleFileChange}
+          />
+        </div>
+        <div
           css={{
-            padding: "10px 10px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "8px",
             width: "100%",
-            borderRadius: "8px",
-            outlineColor: colors.primaryColor,
-            border: "none",
           }}
-          type="file"
-          placeholder="Upload song cover..."
-          onChange={handleImageChange}
-        />
+        >
+          <label
+            htmlFor="title"
+            css={{
+              color: colors.textColor,
+              fontSize: "14px",
+            }}
+          >
+            Image
+          </label>
+          <input
+            css={{
+              padding: "10px 10px",
+              width: "100%",
+              borderRadius: "8px",
+              outlineColor: colors.primaryColor,
+              border: "none",
+            }}
+            type="file"
+            placeholder="Upload song cover..."
+            onChange={handleImageChange}
+          />
+        </div>
 
         <div
           css={{

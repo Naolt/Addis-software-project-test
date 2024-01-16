@@ -9,21 +9,10 @@ import AddSong from "./components/AddSong";
 import { useDispatch, useSelector } from "react-redux";
 import { EditSong } from "./components/EditSong";
 import { fetchSongs } from "./store/reducers/songsReducer";
+import MyListPage from "./components/MyListPage";
 
 function App() {
-  const editModalOpen = useSelector((state) => state.editModal.open);
-  const [addModalOpen, setAddModalOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const dispatch = useDispatch();
-  const songs = useSelector((state) => state.songs.data);
-  const loading = useSelector((state) => state.songs.loading);
-
-  useEffect(() => {
-    console.log("fetching songs");
-    dispatch(fetchSongs(searchTerm));
-  }, [dispatch, searchTerm]);
-
+  const [tab, setTab] = useState("mylist");
   return (
     <div
       css={{
@@ -34,32 +23,45 @@ function App() {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        paddingTop: "10%",
+        paddingTop: "30px",
         gap: "20px",
+        overflowY: "scroll",
       }}
     >
       <div
         css={{
-          width: "400px",
-          backgroundColor: colors.backgroundColor,
-          color: colors.textColor,
           display: "flex",
-          flexDirection: "column",
-          justifyContent: "flex-start",
-          alignItems: "center",
-          gap: "20px",
+          padding: "10px",
+          gap: "15px",
+          fontSize: "24px",
+          fontWeight: "400",
         }}
       >
-        <h1>My Music App</h1>
-        <SongHeader
-          openModal={() => setAddModalOpen(true)}
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-        />
-        <SongList songs={songs} />
-        {addModalOpen && <AddSong closeModal={() => setAddModalOpen(false)} />}
-        {editModalOpen && <EditSong />}
+        <nav
+          css={{
+            cursor: "pointer",
+            borderBottom:
+              tab === "explore" ? `2px solid ${colors.primaryColor}` : "none",
+            color: tab === "explore" ? colors.primaryColor : colors.textColor,
+          }}
+          onClick={() => setTab("explore")}
+        >
+          Explore
+        </nav>
+        <nav
+          css={{
+            cursor: "pointer",
+            borderBottom:
+              tab === "mylist" ? `2px solid ${colors.primaryColor}` : "none",
+            color: tab === "mylist" ? colors.primaryColor : colors.textColor,
+          }}
+          onClick={() => setTab("mylist")}
+        >
+          {" "}
+          My List
+        </nav>
       </div>
+      <MyListPage />
     </div>
   );
 }

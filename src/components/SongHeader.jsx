@@ -10,13 +10,12 @@ const SongHeader = ({ openModal, searchTerm, setSearchTerm }) => {
       css={{
         display: "flex",
         gap: "8px",
-        width: "100%",
       }}
     >
       <input
         css={{
           padding: "10px 10px",
-          width: "80%",
+          width: "200px",
           borderRadius: "8px",
           outlineColor: colors.primaryColor,
           border: "none",

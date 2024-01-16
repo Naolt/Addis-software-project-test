@@ -65,7 +65,7 @@ export const EditSong = () => {
         left: 0,
         width: "100%",
         height: "100%",
-        background: "rgba(0, 0, 0, 0.9)", // Darkened background
+        background: "rgba(255, 255, 255, 0.4)", // Darkened background
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -75,6 +75,7 @@ export const EditSong = () => {
       <div
         css={{
           backgroundColor: colors.backgroundColor,
+          border: `0.5px solid #`,
           display: "flex",
           flexDirection: "column",
           gap: "20px",

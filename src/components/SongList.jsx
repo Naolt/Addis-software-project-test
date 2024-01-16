@@ -2,26 +2,77 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react";
 import { useSelector } from "react-redux";
-import SongCard, { SongCardSkeleton } from "./SongCard";
+import SongCard from "./SongCard";
+import SquareSongCard, { SongCardSkeleton } from "./SquareSongCard";
 
 const SongList = ({ songs }) => {
   const loading = useSelector((state) => state.songs.loading);
 
   return (
-    <div>
+    <div
+      css={{
+        width: "100%",
+      }}
+    >
       <ul
         css={{
+          width: "100%",
           display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
+          flexDirection: "row",
+          justifyContent: "space-between",
           alignItems: "center",
-          gap: "8px",
+          flexWrap: "wrap",
+          gap: "40px",
         }}
       >
         {loading
           ? [1, 2, 3, 4].map((_) => <SongCardSkeleton />)
           : songs?.map((song) => (
-              <SongCard
+              <SquareSongCard
+                title={song.title}
+                song_url={song.song_url}
+                image_url={song.image_url}
+                artist={song.artist}
+                id={song.id}
+              />
+            ))}
+        {loading
+          ? [1, 2, 3, 4].map((_) => <SongCardSkeleton />)
+          : songs?.map((song) => (
+              <SquareSongCard
+                title={song.title}
+                song_url={song.song_url}
+                image_url={song.image_url}
+                artist={song.artist}
+                id={song.id}
+              />
+            ))}
+        {loading
+          ? [1, 2, 3, 4].map((_) => <SongCardSkeleton />)
+          : songs?.map((song) => (
+              <SquareSongCard
+                title={song.title}
+                song_url={song.song_url}
+                image_url={song.image_url}
+                artist={song.artist}
+                id={song.id}
+              />
+            ))}
+        {loading
+          ? [1, 2, 3, 4].map((_) => <SongCardSkeleton />)
+          : songs?.map((song) => (
+              <SquareSongCard
+                title={song.title}
+                song_url={song.song_url}
+                image_url={song.image_url}
+                artist={song.artist}
+                id={song.id}
+              />
+            ))}
+        {loading
+          ? [1, 2, 3, 4].map((_) => <SongCardSkeleton />)
+          : songs?.map((song) => (
+              <SquareSongCard
                 title={song.title}
                 song_url={song.song_url}
                 image_url={song.image_url}
