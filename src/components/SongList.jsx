@@ -20,7 +20,15 @@ const SongList = ({ songs }) => {
       >
         {loading
           ? [1, 2, 3, 4].map((_) => <SongCardSkeleton />)
-          : songs?.map((song) => <SongCard title={song.title} id={song.id} />)}
+          : songs?.map((song) => (
+              <SongCard
+                title={song.title}
+                song_url={song.song_url}
+                image_url={song.image_url}
+                artist={song.artist}
+                id={song.id}
+              />
+            ))}
       </ul>
     </div>
   );

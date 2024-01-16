@@ -2,23 +2,40 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addSong } from "../store/reducers/songsReducer";
 import { colors } from "../theme";
 import { Button } from "./Button";
 
 const AddSong = ({ closeModal }) => {
   const dispatch = useDispatch();
-  const [newSongTitle, setNewSongTitle] = useState("");
-
+  const [songDetail, setSongDetail] = useState({
+    title: "",
+    artist: "",
+    file: null,
+    image: null,
+  });
+  console.log("songDetail", songDetail);
   const handleAddSong = () => {
-    if (newSongTitle) {
-      dispatch(addSong({ title: newSongTitle }));
-      setNewSongTitle("");
+    if (songDetail.title && songDetail.file) {
+      dispatch(addSong({ ...songDetail }));
+      setSongDetail({ title: "", artist: "", file: null, image: null });
       closeModal();
     }
   };
 
+  const handleTitleChange = (e) => {
+    setSongDetail({ ...songDetail, title: e.target.value });
+  };
+  const handleArtistChange = (e) => {
+    setSongDetail({ ...songDetail, artist: e.target.value });
+  };
+  const handleFileChange = (e) => {
+    setSongDetail({ ...songDetail, file: e.target.files[0] });
+  };
+  const handleImageChange = (e) => {
+    setSongDetail({ ...songDetail, image: e.target.files[0] });
+  };
   return (
     <div
       css={{
@@ -58,8 +75,45 @@ const AddSong = ({ closeModal }) => {
           }}
           type="text"
           placeholder="Song title"
-          value={newSongTitle}
-          onChange={(e) => setNewSongTitle(e.target.value)}
+          value={songDetail.title}
+          onChange={handleTitleChange}
+        />
+        <input
+          css={{
+            padding: "10px 10px",
+            width: "100%",
+            borderRadius: "8px",
+            outlineColor: colors.primaryColor,
+            border: "none",
+          }}
+          type="text"
+          placeholder="Song Artist"
+          value={songDetail.artist}
+          onChange={handleArtistChange}
+        />
+        <input
+          css={{
+            padding: "10px 10px",
+            width: "100%",
+            borderRadius: "8px",
+            outlineColor: colors.primaryColor,
+            border: "none",
+          }}
+          type="file"
+          placeholder="Upload the song..."
+          onChange={handleFileChange}
+        />
+        <input
+          css={{
+            padding: "10px 10px",
+            width: "100%",
+            borderRadius: "8px",
+            outlineColor: colors.primaryColor,
+            border: "none",
+          }}
+          type="file"
+          placeholder="Upload song cover..."
+          onChange={handleImageChange}
         />
 
         <div

@@ -9,7 +9,7 @@ import { deleteSong } from "../store/reducers/songsReducer";
 import { useDispatch } from "react-redux";
 import { openEditModal, setSongToModal } from "../store/reducers/modalReducer";
 
-const SongCard = ({ id, title }) => {
+const SongCard = ({ id, title, song_url, image_url, artist }) => {
   const dispatch = useDispatch();
 
   return (
@@ -27,11 +27,25 @@ const SongCard = ({ id, title }) => {
         justifyContent: "space-between",
       }}
     >
-      {title}
+      <img
+        css={{
+          width: "80px",
+          borderRadius: "50%",
+        }}
+        src={image_url}
+        alt="Song Cover"
+      />
+      {title} by {artist}
+      <audio controls>
+        <source src={song_url} type="audio/mp3" />
+        Your browser does not support the audio tag.
+      </audio>
       <div css={{ fontSize: "20px", color: colors.textColor, display: "flex" }}>
         <IconButton
           onClick={() => {
-            dispatch(setSongToModal({ id, title }));
+            dispatch(
+              setSongToModal({ id, title, song_url, image_url, artist })
+            );
             dispatch(openEditModal());
           }}
         >

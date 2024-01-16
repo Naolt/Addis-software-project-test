@@ -8,7 +8,6 @@ const editModalSlice = createSlice({
   },
   reducers: {
     openEditModal: (state, action) => {
-      console.log("Opening");
       return { ...state, open: true };
     },
     closeEditModal: (state, action) => {
