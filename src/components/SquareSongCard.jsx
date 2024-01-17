@@ -8,9 +8,18 @@ import { IconButton } from "./IconButton";
 import { deleteSong } from "../store/reducers/songsReducer";
 import { useDispatch } from "react-redux";
 import { openEditModal, setSongToModal } from "../store/reducers/modalReducer";
+import {
+  openPlayer,
+  setSongToPlayer,
+} from "../store/reducers/audioPlayerReducer";
 
 const SquareSongCard = ({ id, title, song_url, image_url, artist }) => {
   const dispatch = useDispatch();
+
+  const playSong = () => {
+    dispatch(openPlayer());
+    dispatch(setSongToPlayer({ id, title, song_url, image_url, artist }));
+  };
 
   return (
     <div
@@ -25,12 +34,14 @@ const SquareSongCard = ({ id, title, song_url, image_url, artist }) => {
         overflow: "hidden",
         position: "relative",
       }}
+      onClick={playSong}
     >
       <img
         css={{
           width: "100%",
           height: "200px",
           borderRadius: "8px",
+          objectFit: "cover",
         }}
         src={image_url}
         alt="Song Cover"

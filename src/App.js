@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { EditSong } from "./components/EditSong";
 import { fetchSongs } from "./store/reducers/songsReducer";
 import MyListPage from "./components/MyListPage";
+import ExplorePage from "./components/ExplorePage";
+import AudioPlayer from "./components/AudioPlayer";
 
 function App() {
   const [tab, setTab] = useState("mylist");
@@ -26,6 +28,7 @@ function App() {
         paddingTop: "30px",
         gap: "20px",
         overflowY: "scroll",
+        position: "relative",
       }}
     >
       <div
@@ -61,7 +64,9 @@ function App() {
           My List
         </nav>
       </div>
-      <MyListPage />
+      {tab === "explore" ? <ExplorePage /> : <MyListPage />}
+
+      <AudioPlayer />
     </div>
   );
 }

@@ -19,56 +19,12 @@ const SongList = ({ songs }) => {
           width: "100%",
           display: "flex",
           flexDirection: "row",
-          justifyContent: "space-between",
+          //justifyContent: "space-between",
           alignItems: "center",
           flexWrap: "wrap",
           gap: "40px",
         }}
       >
-        {loading
-          ? [1, 2, 3, 4].map((_) => <SongCardSkeleton />)
-          : songs?.map((song) => (
-              <SquareSongCard
-                title={song.title}
-                song_url={song.song_url}
-                image_url={song.image_url}
-                artist={song.artist}
-                id={song.id}
-              />
-            ))}
-        {loading
-          ? [1, 2, 3, 4].map((_) => <SongCardSkeleton />)
-          : songs?.map((song) => (
-              <SquareSongCard
-                title={song.title}
-                song_url={song.song_url}
-                image_url={song.image_url}
-                artist={song.artist}
-                id={song.id}
-              />
-            ))}
-        {loading
-          ? [1, 2, 3, 4].map((_) => <SongCardSkeleton />)
-          : songs?.map((song) => (
-              <SquareSongCard
-                title={song.title}
-                song_url={song.song_url}
-                image_url={song.image_url}
-                artist={song.artist}
-                id={song.id}
-              />
-            ))}
-        {loading
-          ? [1, 2, 3, 4].map((_) => <SongCardSkeleton />)
-          : songs?.map((song) => (
-              <SquareSongCard
-                title={song.title}
-                song_url={song.song_url}
-                image_url={song.image_url}
-                artist={song.artist}
-                id={song.id}
-              />
-            ))}
         {loading
           ? [1, 2, 3, 4].map((_) => <SongCardSkeleton />)
           : songs?.map((song) => (
