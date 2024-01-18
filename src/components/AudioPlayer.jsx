@@ -4,7 +4,7 @@
 import { jsx, css } from "@emotion/react";
 import React, { useEffect, useRef, useState } from "react";
 import { colors } from "../theme";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FaPlayCircle } from "react-icons/fa";
 import { FaBackward } from "react-icons/fa";
 import { FaFastForward } from "react-icons/fa";
@@ -12,10 +12,14 @@ import { FaForward } from "react-icons/fa";
 import { FiVolume1 } from "react-icons/fi";
 import { FaPauseCircle } from "react-icons/fa";
 import { BsVolumeMute } from "react-icons/bs";
+import { MdOutlineClose } from "react-icons/md";
+import { IconButton } from "./IconButton";
+import { closePlayer } from "../store/reducers/audioPlayerReducer";
 
 const AudioPlayer = () => {
   const open = useSelector((state) => state.audioPlayer.open);
   const song = useSelector((state) => state.audioPlayer.song);
+  const dispatch = useDispatch();
 
   const playerRef = useRef(null);
   const progressRef = useRef(null);
@@ -28,56 +32,23 @@ const AudioPlayer = () => {
   const [volume, setVolume] = useState(0.5);
   const [isMuted, setIsMuted] = useState(false);
 
-  useEffect(() => {
-    const handleLoadedMetadata = () => {
-      const seconds = Math.floor(playerRef.current.duration);
-      setDuration(seconds);
-      progressRef.current.max = seconds;
-    };
-
-    if (playerRef.current) {
-      // Add event listener for loadedmetadata event
-      playerRef.current.addEventListener(
-        "loadedmetadata",
-        handleLoadedMetadata
-      );
-
-      // Cleanup the event listener when the component unmounts
-      return () => {
-        playerRef.current.removeEventListener(
-          "loadedmetadata",
-          handleLoadedMetadata
-        );
-      };
+  setTimeout(() => {
+    if (playerRef?.current?.readyState > 0) {
+      playMusic();
+      playerRef.current.volume = volume;
     }
-  }, [playerRef.current]);
+  }, 1000000000);
 
   useEffect(() => {
-    if (playerRef.current) {
-      console.log("song", song);
-      if (!isPlaying) {
-        playMusic();
-      }
-
-      const handleTimeUpdate = () => {
-        progressRef.current.value = playerRef.current.currentTime;
-        progressRef.current.style.setProperty(
-          "--seek-before-width",
-          `${(progressRef.current.value / duration) * 100}%`
-        );
-        setCurrentTime(progressRef.current.value);
-        animationRef.current = requestAnimationFrame(whilePlaying);
-      };
-
-      // Add event listener for timeupdate event
-      playerRef.current.addEventListener("timeupdate", handleTimeUpdate);
-
-      // Cleanup the event listener when the component unmounts
-      return () => {
-        playerRef.current.removeEventListener("timeupdate", handleTimeUpdate);
-      };
+    //if (playerRef?.current) {
+    const seconds = Math.floor(playerRef?.current.duration);
+    console.log(playerRef?.current.duration);
+    if (!isNaN(seconds)) {
+      setDuration(playerRef?.current?.duration);
     }
-  }, [playerRef.current, duration, song]);
+    progressRef.current.max = seconds;
+    //}
+  }, [playerRef?.current?.loadedmetadata, playerRef?.current?.readyState]);
 
   const playMusic = () => {
     playerRef.current.play();
@@ -91,6 +62,7 @@ const AudioPlayer = () => {
   };
 
   const calculateTime = (seconds) => {
+    console.log("Seconds", seconds);
     const minutes = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
     const sec = secs < 10 ? `0${secs}` : secs;
@@ -98,13 +70,15 @@ const AudioPlayer = () => {
   };
 
   const whilePlaying = () => {
-    progressRef.current.value = playerRef?.current.currentTime;
-    progressRef.current.style.setProperty(
-      "--seek-before-width",
-      `${(progressRef.current.value / duration) * 100}%`
-    );
-    setCurrentTime(progressRef.current.value);
-    animationRef.current = requestAnimationFrame(whilePlaying);
+    if (progressRef?.current) {
+      progressRef.current.value = playerRef?.current.currentTime;
+      progressRef.current.style.setProperty(
+        "--seek-before-width",
+        `${(progressRef.current.value / duration) * 100}%`
+      );
+      setCurrentTime(progressRef.current.value);
+      animationRef.current = requestAnimationFrame(whilePlaying);
+    }
   };
 
   const changeRange = () => {
@@ -165,6 +139,24 @@ const AudioPlayer = () => {
           position: "relative",
         }}
       >
+        {/* Close Button */}
+        <div
+          css={{
+            position: "absolute",
+            top: "10px",
+            right: "15px",
+            cursor: "pointer",
+            //"@media (max-width: 800px)": {
+            //top: "0",
+            //right: "0",
+            //},
+          }}
+        >
+          <IconButton onClick={() => dispatch(closePlayer())}>
+            <MdOutlineClose />
+          </IconButton>
+        </div>
+
         {/* Song Detail */}
         <div
           css={{
@@ -274,6 +266,7 @@ const AudioPlayer = () => {
               width: "100%",
               display: "flex",
               gap: "5px",
+              alignItems: "center",
               "@media (max-width: 800px)": {
                 position: "absolute",
                 bottom: "10px",
@@ -302,7 +295,7 @@ const AudioPlayer = () => {
                 "@media (max-width: 800px)": {
                   "::-webkit-slider-thumb": {
                     width: "10px",
-                    display: "none",
+                    //display: "none",
                   },
                 },
               }}
@@ -317,7 +310,7 @@ const AudioPlayer = () => {
                 },
               }}
             >
-              {calculateTime(duration)}
+              {duration && !isNaN(duration) && calculateTime(duration)}
             </span>
           </div>
         </div>

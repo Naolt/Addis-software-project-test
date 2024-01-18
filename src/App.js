@@ -15,6 +15,8 @@ import AudioPlayer from "./components/AudioPlayer";
 
 function App() {
   const [tab, setTab] = useState("mylist");
+  const open = useSelector((state) => state.audioPlayer.open);
+
   return (
     <div
       css={{
@@ -66,7 +68,7 @@ function App() {
       </div>
       {tab === "explore" ? <ExplorePage /> : <MyListPage />}
 
-      <AudioPlayer />
+      {open && <AudioPlayer />}
     </div>
   );
 }
