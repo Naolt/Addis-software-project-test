@@ -102,6 +102,10 @@ const AudioPlayer = () => {
         borderRadius: "8px",
         //overflow: "hidden",
         display: open ? "flex" : "none",
+        "@media (max-width: 800px)": {
+          width: "100%",
+          bottom: "0",
+        },
       }}
     >
       <div
@@ -114,6 +118,7 @@ const AudioPlayer = () => {
           display: "flex",
           gap: "20px",
           alignItems: "center",
+          position: "relative",
         }}
       >
         {/* Song Detail */}
@@ -123,6 +128,10 @@ const AudioPlayer = () => {
             gap: "20px",
             flex: 1,
             flexShrink: 1,
+            "@media (max-width: 800px)": {
+              flexGrow: 2,
+              margin: "10px 0px",
+            },
           }}
         >
           <img
@@ -181,9 +190,20 @@ const AudioPlayer = () => {
               gap: "20px",
               fontSize: "32px",
               alignItems: "center",
+              //backgroundColor: "yellow"
+              "@media (max-width: 800px)": {
+                alignSelf: "flex-end",
+              },
             }}
           >
-            <FaBackward onClick={backThirty} />
+            <FaBackward
+              onClick={backThirty}
+              css={{
+                "@media (max-width: 800px)": {
+                  display: "none",
+                },
+              }}
+            />
             {isPlaying ? (
               <FaPauseCircle
                 css={{ color: colors.primaryColor }}
@@ -195,23 +215,64 @@ const AudioPlayer = () => {
                 onClick={playMusic}
               />
             )}
-            <FaForward onClick={forwardThirty} />
+            <FaForward
+              onClick={forwardThirty}
+              css={{
+                "@media (max-width: 800px)": {
+                  display: "none",
+                },
+              }}
+            />
           </div>
           {/* Range to show music progress */}
-          <div css={{ width: "100%", display: "flex", gap: "5px" }}>
-            {calculateTime(currentTime)}
+          <div
+            css={{
+              width: "100%",
+              display: "flex",
+              gap: "5px",
+              "@media (max-width: 800px)": {
+                position: "absolute",
+                bottom: "10px",
+                left: "0",
+                padding: "0 20px",
+              },
+            }}
+          >
+            <span
+              css={{
+                "@media (max-width: 800px)": {
+                  display: "none",
+                },
+              }}
+            >
+              {calculateTime(currentTime)}
+            </span>
             <input
               type="range"
               css={{
+                width: "100%",
+                height: "5px",
                 flex: 1,
                 color: "red",
                 "--seek-before-width": 0,
+                "::-webkit-slider-thumb": {
+                  width: "10px",
+                  display: "none",
+                },
               }}
               defaultValue={"0"}
               ref={progressRef}
               onChange={changeRange}
             />
-            {calculateTime(duration)}
+            <span
+              css={{
+                "@media (max-width: 800px)": {
+                  display: "none",
+                },
+              }}
+            >
+              {calculateTime(duration)}
+            </span>
           </div>
         </div>
         {/* Volume Control */}
@@ -222,6 +283,11 @@ const AudioPlayer = () => {
             justifyContent: "center",
             paddingTop: "50px",
             flexShrink: 2,
+
+            "@media (max-width: 800px)": {
+              display: "none",
+              flex: 0,
+            },
           }}
         >
           {isMuted ? (

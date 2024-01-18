@@ -19,6 +19,9 @@ const SongHeader = ({ openModal, searchTerm, setSearchTerm }) => {
           borderRadius: "8px",
           outlineColor: colors.primaryColor,
           border: "none",
+          "@media (max-width: 500px)": {
+            width: "100%",
+          },
         }}
         type="text"
         placeholder="Search"
@@ -26,7 +29,16 @@ const SongHeader = ({ openModal, searchTerm, setSearchTerm }) => {
         onChange={(e) => setSearchTerm(e.target.value)}
       />
       <Button color="primary" onClick={() => openModal()}>
-        Add Song
+        {"Add" + " "}
+        <span
+          css={{
+            "@media (max-width: 500px)": {
+              display: "none",
+            },
+          }}
+        >
+          Song
+        </span>
       </Button>
     </div>
   );

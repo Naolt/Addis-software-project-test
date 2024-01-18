@@ -36,6 +36,9 @@ const MyListPage = () => {
         justifyContent: "flex-start",
         alignItems: "center",
         gap: "40px",
+        "@media (max-width: 800px)": {
+          padding: "0 20px",
+        },
       }}
     >
       <div
@@ -44,7 +47,12 @@ const MyListPage = () => {
           width: "100%",
           justifyContent: "space-between",
           alignItems: "center",
-          //  padding: "0 100px",
+          flexWrap: "wrap",
+          "@media (max-width: 800px)": {
+            padding: "0 20px",
+            flexDirection: "column",
+            gap: "60px",
+          },
         }}
       >
         <h1>My List</h1>
