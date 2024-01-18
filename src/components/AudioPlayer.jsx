@@ -2,7 +2,7 @@
 /** @jsx jsx */
 
 import { jsx, css } from "@emotion/react";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { colors } from "../theme";
 import { useDispatch, useSelector } from "react-redux";
 import { FaPlayCircle } from "react-icons/fa";
@@ -32,12 +32,19 @@ const AudioPlayer = () => {
   const [volume, setVolume] = useState(0.5);
   const [isMuted, setIsMuted] = useState(false);
 
-  setTimeout(() => {
-    if (playerRef?.current?.readyState > 0) {
-      playMusic();
-      playerRef.current.volume = volume;
-    }
-  }, 1000000000);
+  useLayoutEffect(() => {
+    const playOnMountTimeout = setTimeout(() => {
+      if (playerRef?.current?.readyState > 0) {
+        playMusic();
+        playerRef.current.volume = volume;
+      }
+    }, 2000);
+
+    return () => {
+      // Cleanup function to remove the timeout on unmount
+      clearTimeout(playOnMountTimeout);
+    };
+  }, [song]);
 
   useEffect(() => {
     //if (playerRef?.current) {

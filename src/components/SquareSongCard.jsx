@@ -9,6 +9,7 @@ import { deleteSong } from "../store/reducers/songsReducer";
 import { useDispatch } from "react-redux";
 import { openEditModal, setSongToModal } from "../store/reducers/modalReducer";
 import {
+  closePlayer,
   openPlayer,
   setSongToPlayer,
 } from "../store/reducers/audioPlayerReducer";
@@ -17,6 +18,7 @@ const SquareSongCard = ({ id, title, song_url, image_url, artist }) => {
   const dispatch = useDispatch();
 
   const playSong = () => {
+    dispatch(closePlayer());
     dispatch(openPlayer());
     dispatch(setSongToPlayer({ id, title, song_url, image_url, artist }));
   };
