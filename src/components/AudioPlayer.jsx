@@ -29,11 +29,55 @@ const AudioPlayer = () => {
   const [isMuted, setIsMuted] = useState(false);
 
   useEffect(() => {
-    const seconds = Math.floor(playerRef?.current.duration);
-    console.log(playerRef?.current.duration);
-    setDuration(playerRef?.current.duration);
-    progressRef.current.max = seconds;
-  }, [playerRef?.current?.loadedmetadata, playerRef?.current?.readyState]);
+    const handleLoadedMetadata = () => {
+      const seconds = Math.floor(playerRef.current.duration);
+      setDuration(seconds);
+      progressRef.current.max = seconds;
+    };
+
+    if (playerRef.current) {
+      // Add event listener for loadedmetadata event
+      playerRef.current.addEventListener(
+        "loadedmetadata",
+        handleLoadedMetadata
+      );
+
+      // Cleanup the event listener when the component unmounts
+      return () => {
+        playerRef.current.removeEventListener(
+          "loadedmetadata",
+          handleLoadedMetadata
+        );
+      };
+    }
+  }, [playerRef.current]);
+
+  useEffect(() => {
+    if (playerRef.current) {
+      console.log("song", song);
+      if (!isPlaying) {
+        playMusic();
+      }
+
+      const handleTimeUpdate = () => {
+        progressRef.current.value = playerRef.current.currentTime;
+        progressRef.current.style.setProperty(
+          "--seek-before-width",
+          `${(progressRef.current.value / duration) * 100}%`
+        );
+        setCurrentTime(progressRef.current.value);
+        animationRef.current = requestAnimationFrame(whilePlaying);
+      };
+
+      // Add event listener for timeupdate event
+      playerRef.current.addEventListener("timeupdate", handleTimeUpdate);
+
+      // Cleanup the event listener when the component unmounts
+      return () => {
+        playerRef.current.removeEventListener("timeupdate", handleTimeUpdate);
+      };
+    }
+  }, [playerRef.current, duration, song]);
 
   const playMusic = () => {
     playerRef.current.play();
@@ -255,9 +299,11 @@ const AudioPlayer = () => {
                 flex: 1,
                 color: "red",
                 "--seek-before-width": 0,
-                "::-webkit-slider-thumb": {
-                  width: "10px",
-                  display: "none",
+                "@media (max-width: 800px)": {
+                  "::-webkit-slider-thumb": {
+                    width: "10px",
+                    display: "none",
+                  },
                 },
               }}
               defaultValue={"0"}

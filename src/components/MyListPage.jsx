@@ -23,6 +23,7 @@ const MyListPage = () => {
   useEffect(() => {
     console.log("fetching songs");
     dispatch(fetchSongs(searchTerm));
+    //reload page
   }, [dispatch, searchTerm]);
   return (
     <div
